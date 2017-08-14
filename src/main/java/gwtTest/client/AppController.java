@@ -3,8 +3,13 @@ package gwtTest.client;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.logging.client.DefaultLevel;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import gwtTest.client.events.*;
 import gwtTest.client.presenter.*;
 import gwtTest.client.views.ChooseClientView;
@@ -29,19 +34,17 @@ public class AppController implements ValueChangeHandler<String> {
 
         eventBus.addHandler(CreateContractEvent.TYPE, new CreateContractEventHandler(){
             public void onCreateContract(CreateContractEvent event) {
-                /*AsyncCallback<String> callback = new AsyncCallback<String>() {
+                AsyncCallback<String> callback = new AsyncCallback<String>() {
                     public void onFailure(Throwable caught) {
 
                     }
 
                     public void onSuccess(String result) {
-                        FlexTable mainTable = mainViewPresenter.getView().getTable();
-                        int rowCount = mainTable.getRowCount();
-                        mainTable.setText(rowCount,0,result);
+
                     }
                 };
 
-                gwtTestServiceAsync.getMessage(callback);*/
+                rpcService.getMessage(callback);
 
                 History.newItem("addcontract");
             }

@@ -1,22 +1,24 @@
 package gwtTest.client.presenter;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.client.ui.HTMLTable;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.SingleSelectionModel;
 import gwtTest.client.GwtTestServiceAsync;
+import gwtTest.client.dto.ContractDTO;
 import gwtTest.client.events.CreateContractEvent;
 import gwtTest.client.events.OpenContractEvent;
-import gwtTest.client.views.MainView;
 
 public class MainViewPresenter implements Presenter {
     public interface Display{
         Widget asWidget();
         HasClickHandlers getCreateButton();
         HasClickHandlers getOpenButton();
+        CellTable<ContractDTO> getMainTable();
     }
 
     final Display display;
@@ -30,6 +32,13 @@ public class MainViewPresenter implements Presenter {
     }
 
     public void init(){
+        SingleSelectionModel<ContractDTO> selectionModel = new SingleSelectionModel<ContractDTO>();
+        display.getMainTable().setSelectionModel(selectionModel);
+        display.getMainTable().addDomHandler(new DoubleClickHandler() {
+            public void onDoubleClick(DoubleClickEvent event) {
+                eventBus.fireEvent(new OpenContractEvent());
+            }
+        },DoubleClickEvent.getType());
         display.getCreateButton().addClickHandler(new ClickHandler(){
             public void onClick(ClickEvent event) {
                 eventBus.fireEvent(new CreateContractEvent());

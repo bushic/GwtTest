@@ -11,5 +11,4 @@
 
     <!-- Specify the app servlets.                   -->
     <servlet path='/GwtTestService' class='gwtTest.server.GwtTestServiceImpl'/>
-
 </module>

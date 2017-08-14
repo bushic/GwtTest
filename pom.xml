@@ -8,5 +8,12 @@
     <artifactId>GwtTest</artifactId>
     <version>1.0</version>
 
-    
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.34</version>
+        </dependency>
+    </dependencies>
 </project>
