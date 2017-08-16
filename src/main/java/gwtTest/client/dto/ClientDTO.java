@@ -82,4 +82,8 @@ public class ClientDTO implements Serializable {
     public void setPassportnumber(Integer passportnumber) {
         this.passportnumber = passportnumber;
     }
+
+    public String toString(){
+        return surname + " " + firstname + " " + middlename;
+    }
 }

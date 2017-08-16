@@ -6,14 +6,14 @@ import java.sql.Date;
 public class ContractDTO implements Serializable {
 
     private int id;
-    private double sum;
+    private int sum;
     private Date datestart;
     private Date datefinish;
     private String propertytype;
-    private int constructionyear;
-    private double square;
+    private String constructionyear;
+    private String square;
     private Date calculatedate;
-    private double bonus;
+    private String bonus;
     private int number;
     private Date contractdate;
     private String country;
@@ -22,21 +22,21 @@ public class ContractDTO implements Serializable {
     private String area;
     private String locality;
     private String street;
-    private String house;
+    private Integer house;
     private String housing;
     private String building;
-    private String flat;
+    private int flat;
     private String comment;
     private int client;
     private ClientDTO clientsByClient;
 
 
-    public ContractDTO(int id, double sum, Date datestart, Date datefinish,
-                       String propertytype, int constructionyear, double square,
-                       Date calculatedate, double bonus, int number, Date contractdate,
+    public ContractDTO(int id, int sum, Date datestart, Date datefinish,
+                       String propertytype, String constructionyear, String square,
+                       Date calculatedate, String bonus, int number, Date contractdate,
                        String country, String index, String republic, String area,
-                       String locality, String street, String house, String housing,
-                       String building, String flat, String comment, int client, ClientDTO clientsByClient) {
+                       String locality, String street, Integer house, String housing,
+                       String building, int flat, String comment, int client, ClientDTO clientsByClient) {
         this.id = id;
         this.sum = sum;
         this.datestart = datestart;
@@ -74,14 +74,6 @@ public class ContractDTO implements Serializable {
         this.id = id;
     }
 
-    public double getSum() {
-        return sum;
-    }
-
-    public void setSum(double sum) {
-        this.sum = sum;
-    }
-
     public Date getDatestart() {
         return datestart;
     }
@@ -106,19 +98,19 @@ public class ContractDTO implements Serializable {
         this.propertytype = propertytype;
     }
 
-    public int getConstructionyear() {
+    public String getConstructionyear() {
         return constructionyear;
     }
 
-    public void setConstructionyear(int constructionyear) {
+    public void setConstructionyear(String constructionyear) {
         this.constructionyear = constructionyear;
     }
 
-    public double getSquare() {
+    public String getSquare() {
         return square;
     }
 
-    public void setSquare(double square) {
+    public void setSquare(String square) {
         this.square = square;
     }
 
@@ -128,14 +120,6 @@ public class ContractDTO implements Serializable {
 
     public void setCalculatedate(Date calculatedate) {
         this.calculatedate = calculatedate;
-    }
-
-    public double getBonus() {
-        return bonus;
-    }
-
-    public void setBonus(double bonus) {
-        this.bonus = bonus;
     }
 
     public int getNumber() {
@@ -202,11 +186,11 @@ public class ContractDTO implements Serializable {
         this.locality = locality;
     }
 
-    public String getHouse() {
+    public Integer getHouse() {
         return house;
     }
 
-    public void setHouse(String house) {
+    public void setHouse(Integer house) {
         this.house = house;
     }
 
@@ -226,11 +210,11 @@ public class ContractDTO implements Serializable {
         this.building = building;
     }
 
-    public String getFlat() {
+    public int getFlat() {
         return flat;
     }
 
-    public void setFlat(String flat) {
+    public void setFlat(int flat) {
         this.flat = flat;
     }
 
@@ -256,5 +240,21 @@ public class ContractDTO implements Serializable {
 
     public void setClientsByClient(ClientDTO clientsByClient) {
         this.clientsByClient = clientsByClient;
+    }
+
+    public String getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(String bonus) {
+        this.bonus = bonus;
+    }
+
+    public int getSum() {
+        return sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
     }
 }

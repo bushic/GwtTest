@@ -8,7 +8,7 @@
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="connection.username">root</property>
     <property name="connection.password">1234</property>
-      <mapping class="gwtTest.shared.ClientsEntity"/>
+    <mapping class="gwtTest.shared.ClientsEntity"/>
     <mapping class="gwtTest.shared.ContractsEntity"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->

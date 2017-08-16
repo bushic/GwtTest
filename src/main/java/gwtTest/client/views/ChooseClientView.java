@@ -1,7 +1,12 @@
 package gwtTest.client.views;
 
+import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.*;
+import gwtTest.client.dto.ClientDTO;
+import gwtTest.client.dto.ContractDTO;
 import gwtTest.client.presenter.ChooseClientViewPresenter;
 
 public class ChooseClientView extends Composite implements ChooseClientViewPresenter.Display {
@@ -10,7 +15,7 @@ public class ChooseClientView extends Composite implements ChooseClientViewPrese
     private TextBox nameTextBox;
     private TextBox middleNameTextBox;
     private PushButton searchClientButton;
-    private FlexTable clientTable;
+    private CellTable<ClientDTO> clientTable;
     private Button chooseClientButton;
     private Button newClientButton;
     private Button closeChooseClientViewButton;
@@ -39,12 +44,28 @@ public class ChooseClientView extends Composite implements ChooseClientViewPrese
         horizontalPanel.setSpacing(10);
         container.add(horizontalPanel);
 
-        clientTable = new FlexTable();
-        clientTable.setText(0,0,"ФИО");
-        clientTable.setText(0,1,"Дата рождения");
-        clientTable.setText(0,2,"Паспортные данные");
-        clientTable.setBorderWidth(1);
-        clientTable.setCellPadding(5);
+        clientTable = new CellTable<ClientDTO>();
+        TextColumn<ClientDTO> nameColumn = new TextColumn<ClientDTO>(){
+            @Override
+            public String getValue(ClientDTO clientDTO) {
+                return clientDTO.toString();
+            }
+        };
+        TextColumn<ClientDTO> birthdayColumn = new TextColumn<ClientDTO>(){
+            @Override
+            public String getValue(ClientDTO clientDTO) {
+                return clientDTO.getBirthday().toString();
+            }
+        };
+        TextColumn<ClientDTO> passportColumn = new TextColumn<ClientDTO>(){
+            @Override
+            public String getValue(ClientDTO clientDTO) {
+                return clientDTO.getPassportseries() + "-" + clientDTO.getPassportnumber();
+            }
+        };
+        clientTable.addColumn(nameColumn,"ФИО");
+        clientTable.addColumn(birthdayColumn,"Дата рождения");
+        clientTable.addColumn(passportColumn,"Паспортные данные");
         container.add(clientTable);
 
         chooseClientButton = new Button();
@@ -75,5 +96,25 @@ public class ChooseClientView extends Composite implements ChooseClientViewPrese
 
     public HasClickHandlers getNewClientButton() {
         return newClientButton;
+    }
+
+    public HasClickHandlers getSearchButton() {
+        return searchClientButton;
+    }
+
+    public HasValue<String> getSurName() {
+        return surnameTextBox;
+    }
+
+    public HasValue<String> getFirstName() {
+        return nameTextBox;
+    }
+
+    public HasValue<String> getMiddleName() {
+        return middleNameTextBox;
+    }
+
+    public CellTable<ClientDTO> getMainTable() {
+        return clientTable;
     }
 }

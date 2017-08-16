@@ -3,13 +3,10 @@ package gwtTest.client;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.logging.client.DefaultLevel;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
+import gwtTest.client.dto.ClientDTO;
+import gwtTest.client.dto.ContractDTO;
 import gwtTest.client.events.*;
 import gwtTest.client.presenter.*;
 import gwtTest.client.views.ChooseClientView;
@@ -22,6 +19,7 @@ public class AppController implements ValueChangeHandler<String> {
     private HandlerManager eventBus;
     private HasWidgets container;
     private GwtTestServiceAsync rpcService;
+    private ContractDTO currentContract;
 
     public AppController(GwtTestServiceAsync rpcService,HandlerManager manager){
         this.rpcService = rpcService;
@@ -34,18 +32,7 @@ public class AppController implements ValueChangeHandler<String> {
 
         eventBus.addHandler(CreateContractEvent.TYPE, new CreateContractEventHandler(){
             public void onCreateContract(CreateContractEvent event) {
-                AsyncCallback<String> callback = new AsyncCallback<String>() {
-                    public void onFailure(Throwable caught) {
-
-                    }
-
-                    public void onSuccess(String result) {
-
-                    }
-                };
-
-                rpcService.getMessage(callback);
-
+                currentContract = event.getContractDTO();
                 History.newItem("addcontract");
             }
         });
@@ -61,7 +48,8 @@ public class AppController implements ValueChangeHandler<String> {
         });
         eventBus.addHandler(OpenContractEvent.TYPE, new OpenContractEventHandler() {
             public void onOpenContract(OpenContractEvent event) {
-                History.newItem("addcontract");
+                currentContract = event.getContractDTO();
+                History.newItem("opencontract");
             }
         });
         eventBus.addHandler(CreateClientEvent.TYPE, new CreateClientEventHandler() {
@@ -74,26 +62,7 @@ public class AppController implements ValueChangeHandler<String> {
                 History.newItem("editclient");
             }
         });
-        eventBus.addHandler(ChooseClientEvent.TYPE, new ChooseClientEventHandler() {
-            public void onChooseClient(ChooseClientEvent event) {
-                History.newItem("addcontract");
-            }
-        });
-        eventBus.addHandler(CalculateEvent.TYPE, new CalculateEventHandler() {
-            public void onCalculate(CalculateEvent event) {
 
-            }
-        });
-        eventBus.addHandler(SaveContractEvent.TYPE, new SaveContractEventHandler() {
-            public void onSaveContract(SaveContractEvent event) {
-                History.newItem("list");
-            }
-        });
-        eventBus.addHandler(SaveClientEvent.TYPE, new SaveClientEventHandler() {
-            public void onSaveClient(SaveClientEvent event) {
-                History.newItem("addContract");
-            }
-        });
     }
     public void goTo(HasWidgets page){
         this.container = page;
@@ -111,19 +80,22 @@ public class AppController implements ValueChangeHandler<String> {
         if (token != null) {
             Presenter presenter = null;
             if (token.equals("addcontract")) {
-                presenter = new ContractViewPresenter(rpcService, new ContractView(), eventBus);
+                presenter = new ContractViewPresenter(rpcService, new ContractView(), eventBus, currentContract);
             }
             else if (token.equals("list")) {
                 presenter = new MainViewPresenter(rpcService, new MainView(), eventBus);
             }
+            else if (token.equals("opencontract")) {
+                presenter = new ContractViewPresenter(rpcService, new ContractView(), eventBus, currentContract);
+            }
             else if (token.equals("chooseclient")){
-                presenter = new ChooseClientViewPresenter(rpcService, new ChooseClientView(), eventBus);
+                presenter = new ChooseClientViewPresenter(rpcService, new ChooseClientView(), eventBus, currentContract);
             }
             else if (token.equals("newclient")){
-                presenter = new EditClientViewPresenter(rpcService, new EditClientView("create"), eventBus, "create");
+                presenter = new EditClientViewPresenter(rpcService, new EditClientView("create"), eventBus, currentContract, "create");
             }
             else if (token.equals("editclient")){
-                presenter = new EditClientViewPresenter(rpcService, new EditClientView("edit"), eventBus,"edit");
+                presenter = new EditClientViewPresenter(rpcService, new EditClientView("edit"), eventBus, currentContract,"edit");
             }
             if (presenter != null)
                 presenter.go(container);

@@ -1,20 +1,12 @@
 package gwtTest.client.views;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.*;
-import com.google.gwt.view.client.ListDataProvider;
-import com.google.gwt.view.client.SingleSelectionModel;
 import gwtTest.client.dto.ClientDTO;
 import gwtTest.client.dto.ContractDTO;
 import gwtTest.client.presenter.MainViewPresenter;
-
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class MainView extends Composite implements  MainViewPresenter.Display {
 
@@ -61,13 +53,13 @@ public class MainView extends Composite implements  MainViewPresenter.Display {
         TextColumn<ContractDTO> bonusColumn = new TextColumn<ContractDTO>(){
             @Override
             public String getValue(ContractDTO contract) {
-                return String.valueOf(contract.getBonus());
+                return contract.getBonus();
             }
         };
         TextColumn<ContractDTO> datesColumn = new TextColumn<ContractDTO>(){
             @Override
             public String getValue(ContractDTO contract) {
-                return contract.getDatestart().toString() + "-" + contract.getDatefinish().toString();
+                return contract.getDatestart().toString() +  " - " + contract.getDatefinish().toString();
             }
         };
         mainTable.addColumn(passportColumn,"Серия-Номер");

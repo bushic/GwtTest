@@ -4,7 +4,6 @@ import gwtTest.client.dto.ClientDTO;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Collection;
 
 @Entity
 @Table(name = "clients", schema = "gwt", catalog = "")
@@ -16,7 +15,6 @@ public class ClientsEntity {
     private Date birthday;
     private Integer passportseries;
     private Integer passportnumber;
-    private Collection<ContractsEntity> contractsById;
 
     public ClientsEntity(ClientDTO clientDTO){
         id = clientDTO.getId();
@@ -62,7 +60,7 @@ public class ClientsEntity {
     }
 
     @Basic
-    @Column(name = "middlename", nullable = false, length = 45)
+    @Column(name = "middlename", nullable = true, length = 45)
     public String getMiddlename() {
         return middlename;
     }
@@ -131,14 +129,5 @@ public class ClientsEntity {
         result = 31 * result + (passportseries != null ? passportseries.hashCode() : 0);
         result = 31 * result + (passportnumber != null ? passportnumber.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "clientsByClient")
-    public Collection<ContractsEntity> getContractsById() {
-        return contractsById;
-    }
-
-    public void setContractsById(Collection<ContractsEntity> contractsById) {
-        this.contractsById = contractsById;
     }
 }

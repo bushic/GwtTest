@@ -4,6 +4,8 @@
 
     <!-- Inherit the core Web Toolkit stuff.                  -->
     <inherits name='com.google.gwt.user.User'/>
+    <inherits name='com.google.gwt.user.theme.standard.Standard' />
+    <stylesheet src="GwtTest.css" />
 
     <!-- Specify the app entry point class.                   -->
     <entry-point class='gwtTest.client.GwtTest'/>
